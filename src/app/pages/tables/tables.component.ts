@@ -3,10 +3,10 @@ import { ReactiveFormsModule, FormControl } from '@angular/forms';
 import {CdkTableModule} from '@angular/cdk/table';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Character, RickMorty } from '../../models/rick-morty.model';
-import { NavbarComponent } from '../../components/navbar/navbar.component';
+import { NavbarComponent } from '../../modules/layout/components/navbar/navbar.component';
 import { CommonModule } from '@angular/common';
 import { DataSourceCharacter } from './data-source';
-import { BtnComponent } from '../../components/btn/btn.component';
+import { BtnComponent } from '../../modules/shared/components/btn/btn.component';
 import { debounceTime } from 'rxjs';
 
 
