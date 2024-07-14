@@ -52,4 +52,8 @@ export class AuthService {
     return this.http.post(this.api + '/api/v1/auth/change-password', {token, newPassword})
   }
 
+  logOut(){
+      this.tokenSrv.removeToken();
+  }
+
 }

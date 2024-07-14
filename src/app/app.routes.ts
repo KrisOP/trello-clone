@@ -5,9 +5,11 @@ import { BoardComponent } from './modules/boards/pages/board/board.component';
 import { ScrollComponent } from './pages/scroll/scroll.component';
 import { TablesComponent } from './pages/tables/tables.component';
 import { AuthGuard } from '@guards/auth.guard';
+import { redirectGuard } from '@guards/redirect.guard';
 
 export const routes: Routes = [
-     { path:'', loadChildren :() => import ('./modules/auth/auth.routes')},
+// Suggested code may be subject to a license. Learn more: ~LicenseLog:170395205.
+     { path:'', canActivate: [redirectGuard], loadChildren :() => import ('./modules/auth/auth.routes')},
 // Suggested code may be subject to a license. Learn more: ~LicenseLog:3735305821.
      { path:'app', canActivate: [AuthGuard], loadChildren :() => import ('./modules/layout/layout.routes')},
 
