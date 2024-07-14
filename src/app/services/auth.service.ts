@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { environment } from '@environments/environment.prod';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, tap } from 'rxjs/operators';
+import { TokenService } from './token.service';
+import { ResponseLogin } from '@models/auth.model';
 //import { HttpClientModule }
 
 @Injectable({
@@ -11,11 +13,16 @@ export class AuthService {
 
   api = environment.API_URL;
 
-  constructor( private http: HttpClient) { }
+  constructor( private http: HttpClient,
+    private tokenSrv: TokenService
+  ) { }
 
   login(email:string, password:string){
-    return this.http.post(this.api + '/api/v1/auth/login', {email, password})
-
+    return this.http.post<ResponseLogin>(this.api + '/api/v1/auth/login', {email, password})
+    .pipe(
+      //antes de retornar el token lo guardamos en el localstorage
+      tap((res) => this.tokenSrv.saveToken(res.refresh_token))
+    )
   }
 
   register(name:string, email:string, password:string){
