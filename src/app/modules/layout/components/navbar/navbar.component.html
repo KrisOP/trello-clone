@@ -1,120 +1,127 @@
-<nav class="bg-sky-700 border-gray-200 px-6 shadow-md">
-  <div class="flex flex-wrap justify-between items-center">
-    <div class="flex items-center">
-      <a routerLink="/">
-        <img loading="lazy" class="w-20 mr-8" src="/assets/img/logos/trello-logo-gradient-white-attribution_rgb@2x.png"
-          alt="logo" />
-      </a>
+<ng-container *ngIf = "user | async as user">
+
+  <nav class="bg-sky-700 border-gray-200 px-6 shadow-md">
+    <div class="flex flex-wrap justify-between items-center">
       <div class="flex items-center">
-        <ul class="flex items-center space-x-2 text-sm font-medium">
-          <li>
-            <a class="block py-3 px-4 text-white">Workspaces</a>
-          </li>
-          <li>
-            <button type="button" class="block py-3 px-4 text-white" aria-expanded="false" type="button"
-              (click)="isOpenBody = !isOpenBody" cdkOverlayOrigin #menuBodyOverlay="cdkOverlayOrigin"> Menu
-            </button>
-          </li>
-          <li>
-            <a class="block py-3 px-4 text-white">Recent</a>
-          </li>
-          <li>
-            <app-btn class="py-3 px-4" typeBtn="button" color="sky">Create</app-btn>
-          </li>
-        </ul>
+        <a routerLink="/">
+          <img loading="lazy" class="w-20 mr-8" src="/assets/img/logos/trello-logo-gradient-white-attribution_rgb@2x.png"
+            alt="logo" />
+        </a>
+        <div class="flex items-center">
+          <ul class="flex items-center space-x-2 text-sm font-medium">
+            <li>
+              <a class="block py-3 px-4 text-white">Workspaces</a>
+            </li>
+            <li>
+              <button type="button" class="block py-3 px-4 text-white" aria-expanded="false" type="button"
+                (click)="isOpenBody = !isOpenBody" cdkOverlayOrigin #menuBodyOverlay="cdkOverlayOrigin"> Menu
+              </button>
+            </li>
+            <li>
+              <a class="block py-3 px-4 text-white">Recent</a>
+            </li>
+            <li>
+              <a class="block py-3 px-4 text-white" routerLink="/app/users" >Users</a>
+            </li>
+            <li>
+              <app-btn class="py-3 px-4" typeBtn="button" color="sky">Create</app-btn>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="flex items-center">
+  
+        <div class="flex space-x-2">
+          <button class="text-gray-100 text-xl" type="button">
+            <fa-icon [icon]="faInfoCircle"></fa-icon>
+          </button>
+  
+          <button class="text-gray-100 text-xl" type="button">
+            <fa-icon [icon]="faBell"></fa-icon>
+          </button>
+  
+  
+          <button type="button" class="flex rounded-full" aria-expanded="false" type="button" (click)="isOpen = !isOpen"
+            cdkOverlayOrigin #menuOverlay="cdkOverlayOrigin">
+            <img class="w-8 h-8 rounded-full"
+              src="https://yt3.ggpht.com/fVhzdmf7lqDcTzerF7kvZ2sAqoKzM2wSyuQGPKeS0noNhqzFJxsClxbCGIIWTmGTswr_k7PfsKU=s88-c-k-c0x00ffffff-no-rj"
+              alt="user photo" />
+          </button>
+        </div>
       </div>
     </div>
-    <div class="flex items-center">
-
-      <div class="flex space-x-2">
-        <button class="text-gray-100 text-xl" type="button">
-          <fa-icon [icon]="faInfoCircle"></fa-icon>
-        </button>
-
-        <button class="text-gray-100 text-xl" type="button">
-          <fa-icon [icon]="faBell"></fa-icon>
-        </button>
-
-
-        <button type="button" class="flex rounded-full" aria-expanded="false" type="button" (click)="isOpen = !isOpen"
-          cdkOverlayOrigin #menuOverlay="cdkOverlayOrigin">
-          <img class="w-8 h-8 rounded-full"
-            src="https://yt3.ggpht.com/fVhzdmf7lqDcTzerF7kvZ2sAqoKzM2wSyuQGPKeS0noNhqzFJxsClxbCGIIWTmGTswr_k7PfsKU=s88-c-k-c0x00ffffff-no-rj"
-            alt="user photo" />
+  </nav>
+  
+  <ng-template cdkConnectedOverlay 
+  [cdkConnectedOverlayOrigin]="menuOverlay" 
+  [cdkConnectedOverlayOpen]="isOpen"
+  (overlayOutsideClick)="isOpen = !isOpen">
+  
+    <div class="z-50 my-4 w-60 text-base list-none bg-white rounded divide-y divide-gray-100 shadow">
+      <div class="py-3 px-4 flex justify-between">
+        <span class="block text-sm text-center text-gray-900">Account</span>
+        <button (click)="isOpen = !isOpen" class="block text-sm text-gray-900">
+          <!-- <fa-icon [icon]="faClose"></fa-icon> -->
         </button>
       </div>
-    </div>
-  </div>
-</nav>
-
-<ng-template cdkConnectedOverlay 
-[cdkConnectedOverlayOrigin]="menuOverlay" 
-[cdkConnectedOverlayOpen]="isOpen"
-(overlayOutsideClick)="isOpen = !isOpen">
-
-  <div class="z-50 my-4 w-60 text-base list-none bg-white rounded divide-y divide-gray-100 shadow">
-    <div class="py-3 px-4 flex justify-between">
-      <span class="block text-sm text-center text-gray-900">Account</span>
-      <button (click)="isOpen = !isOpen" class="block text-sm text-gray-900">
-        <!-- <fa-icon [icon]="faClose"></fa-icon> -->
-      </button>
-    </div>
-    <div class="py-3 px-4 flex items-center space-x-4">
-      <img class="w-10 h-10 rounded-full"
-        src="https://yt3.ggpht.com/fVhzdmf7lqDcTzerF7kvZ2sAqoKzM2wSyuQGPKeS0noNhqzFJxsClxbCGIIWTmGTswr_k7PfsKU=s88-c-k-c0x00ffffff-no-rj"
-        alt="" />
-      <div class="space-y-1">
-        <div>KrisOP</div>
-        <div class="text-sm text-gray-500">krisop&#64;gmail.com</div>
+      <div class="py-3 px-4 flex items-center space-x-4">
+        <img class="w-10 h-10 rounded-full"
+  
+        [src]="user?.avatar"
+          alt="" />
+        <div class="space-y-1">
+          <div>{{user?.name}}</div>
+          <div class="text-sm text-gray-500">{{user?.email}}</div>
+        </div>
       </div>
+      <ul class="py-1">
+        <li>
+          <a href="#" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-300">Profile</a>
+        </li>
+        <li>
+          <a href="#" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-300">Activity</a>
+        </li>
+        <li>
+          <a href="#" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-300">Cards</a>
+        </li>
+        <li>
+          <a href="#" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-300">Settings</a>
+        </li>
+        <li>
+          <a href="#" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-300">Sign out</a>
+        </li>
+      </ul>
+      <ul class="py-1">
+        <li>
+  <!-- Suggested code may be subject to a license. Learn more: ~LicenseLog:529810335. -->
+          <a (click)="logOut()" class="block py-2 px-4 text-sm text-gray-700 dark:hover:bg-red-100">Log out</a>
+        </li>
+      </ul>
     </div>
-    <ul class="py-1">
-      <li>
-        <a href="#" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-300">Profile</a>
-      </li>
-      <li>
-        <a href="#" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-300">Activity</a>
-      </li>
-      <li>
-        <a href="#" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-300">Cards</a>
-      </li>
-      <li>
-        <a href="#" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-300">Settings</a>
-      </li>
-      <li>
-        <a href="#" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-300">Sign out</a>
-      </li>
-    </ul>
-    <ul class="py-1">
-      <li>
-<!-- Suggested code may be subject to a license. Learn more: ~LicenseLog:529810335. -->
-        <a (click)="logOut()" class="block py-2 px-4 text-sm text-gray-700 dark:hover:bg-red-100">Log out</a>
-      </li>
-    </ul>
-  </div>
-</ng-template>
-
-<ng-template cdkConnectedOverlay [cdkConnectedOverlayOrigin]="menuBodyOverlay" [cdkConnectedOverlayOpen]="isOpenBody">
-
-  <div class="z-50 my-4 text-base list-none bg-white rounded divide-y divide-gray-100 shadow">
-    <div class="py-3 px-4">
-      <span class="block text-sm text-gray-900 ">Kristopher Ortega</span>
-      <span class="block text-sm font-medium text-gray-500 truncate ">krisop&#64;krisopsite.com</span>
+  </ng-template>
+  
+  <ng-template cdkConnectedOverlay [cdkConnectedOverlayOrigin]="menuBodyOverlay" [cdkConnectedOverlayOpen]="isOpenBody">
+  
+    <div class="z-50 my-4 text-base list-none bg-white rounded divide-y divide-gray-100 shadow">
+      <div class="py-3 px-4">
+        <span class="block text-sm text-gray-900 ">Kristopher Ortega</span>
+        <span class="block text-sm font-medium text-gray-500 truncate ">krisop&#64;krisopsite.com</span>
+      </div>
+      <ul class="py-1" aria-labelledby="user-menu-button">
+        <li>
+          <a href="#" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-300">Dashboard</a>
+        </li>
+        <li>
+          <a href="#" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-300 ">Settings</a>
+        </li>
+        <li>
+          <a href="#" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-300 ">Earnings</a>
+        </li>
+        <li>
+          <a href="#" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-300 ">Sign out</a>
+        </li>
+      </ul>
     </div>
-    <ul class="py-1" aria-labelledby="user-menu-button">
-      <li>
-        <a href="#" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-300">Dashboard</a>
-      </li>
-      <li>
-        <a href="#" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-300 ">Settings</a>
-      </li>
-      <li>
-        <a href="#" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-300 ">Earnings</a>
-      </li>
-      <li>
-        <a href="#" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-300 ">Sign out</a>
-      </li>
-    </ul>
-  </div>
-
-</ng-template>
+  
+  </ng-template>
+</ng-container>

@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule, HttpHeaders } from '@angular/common/http';
 import { environment } from '@environments/environment.prod';
 import { switchMap, tap } from 'rxjs/operators';
 import { TokenService } from './token.service';
 import { ResponseLogin } from '@models/auth.model';
+import { User } from '@models/user.model';
+import { BehaviorSubject } from 'rxjs';
 //import { HttpClientModule }
 
 @Injectable({
@@ -13,6 +15,9 @@ export class AuthService {
 
   api = environment.API_URL;
 
+  //observable
+  user$ = new BehaviorSubject <User | null>(null);
+
   constructor( private http: HttpClient,
     private tokenSrv: TokenService
   ) { }
@@ -21,7 +26,7 @@ export class AuthService {
     return this.http.post<ResponseLogin>(this.api + '/api/v1/auth/login', {email, password})
     .pipe(
       //antes de retornar el token lo guardamos en el localstorage
-      tap((res) => this.tokenSrv.saveToken(res.refresh_token))
+      tap((res) => this.tokenSrv.saveToken(res.access_token))
     )
   }
 
@@ -46,6 +51,19 @@ export class AuthService {
 
   recovery( email:string){
     return this.http.post(this.api + '/api/v1/auth/recovery', {email})
+  }
+
+
+  profile(){
+    const token = this.tokenSrv.getToken();
+
+    let headers = new HttpHeaders()
+    .set('Authorization', `Bearer ${token}`);
+
+    return this.http.get<User>(this.api + '/api/v1/auth/profile', { headers: headers})
+    .pipe (
+      tap((user) => this.user$.next(user))
+    )
   }
 
   changePassword(token:string, newPassword:string){
