@@ -5,6 +5,7 @@ import { environment } from '@environments/environment';
 import { User } from '@models/user.model';
 import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs/internal/observable/throwError';
+import { checkToken } from '@interceptors/token.interceptor';
 
 @Injectable({
   providedIn: 'root'
@@ -18,10 +19,7 @@ export class UserService {
 
 
     getUsers(){
-      const token = this.tokenSrv.getToken()
-      let headers = new HttpHeaders()
-                        .set('Authorization', `Bearer ${token}`);
-    return this.http.get<User[]>(`${this.api}/api/v1/users`, { headers: headers});
+    return this.http.get<User[]>(`${this.api}/api/v1/users`, { context: checkToken()});
     }
 
 }

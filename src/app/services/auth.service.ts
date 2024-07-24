@@ -6,6 +6,7 @@ import { TokenService } from './token.service';
 import { ResponseLogin } from '@models/auth.model';
 import { User } from '@models/user.model';
 import { BehaviorSubject } from 'rxjs';
+import { checkToken } from '@interceptors/token.interceptor';
 //import { HttpClientModule }
 
 @Injectable({
@@ -56,11 +57,7 @@ export class AuthService {
 
   profile(){
     const token = this.tokenSrv.getToken();
-
-    let headers = new HttpHeaders()
-    .set('Authorization', `Bearer ${token}`);
-
-    return this.http.get<User>(this.api + '/api/v1/auth/profile', { headers: headers})
+    return this.http.get<User>(this.api + '/api/v1/auth/profile', { context: checkToken()})
     .pipe (
       tap((user) => this.user$.next(user))
     )
