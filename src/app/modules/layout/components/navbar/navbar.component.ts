@@ -29,7 +29,9 @@ export class NavbarComponent {
   //observable
   user=this.autSrv.user$;
 
-  constructor( private tokenSrv: TokenService, private router: Router, private autSrv: AuthService){
+  constructor( private tokenSrv: TokenService,
+     private router: Router,
+      private autSrv: AuthService){
 
   }
 
@@ -44,5 +46,11 @@ export class NavbarComponent {
   logOut(){
     this.tokenSrv.removeToken();
     this.router.navigate(['/login']);
+  }
+
+  isValidToken(){
+
+    console.log(this.tokenSrv.isValidToken());
+
   }
 }
